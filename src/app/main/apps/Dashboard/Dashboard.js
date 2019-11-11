@@ -10,9 +10,7 @@ const styles = makeStyles(theme => ({
         overflowX: "hidden"
     },
     content: {
-        flexGrow: 1,
         padding: theme.spacing(3),
-        justifyContent: "center",
         textAlign: "center"
     }
 }));
@@ -25,10 +23,10 @@ const dashboard = () => {
         <div>
             <div className={classes.root}>
                 <Grid className={classes.content} container spacing={3}>
-                    <DashboardCard title="Present workers" value={40}/>
-                    <DashboardCard title="Paid workers" value={40}/>
-                    <DashboardCard title="Total workers" value={40}/>
-                    <DashboardCard title="Total supervisors" value={40}/>
+                    <DashboardCard title="Present workers" class="text-72 leading-none text-blue" value={40}/>
+                    <DashboardCard title="Paid workers" class="text-72 leading-none text-red" value={40}/>
+                    <DashboardCard title="Total workers" class="text-72 leading-none text-orange" value={40}/>
+                    <DashboardCard title="Total supervisors" class="text-72 leading-none text-green" value={40}/>
                 </Grid>
 
             </div>
