@@ -50,8 +50,8 @@ function JWTLoginTab()
                 <TextFieldFormsy
                     className="mb-16"
                     type="text"
-                    name="email"
-                    label="Username/Email"
+                    name="profileId"
+                    label="Profile ID"
                     validations={{
                         minLength: 4
                     }}

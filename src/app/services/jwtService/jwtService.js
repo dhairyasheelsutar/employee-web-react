@@ -4,8 +4,12 @@ import FuseUtils from '@fuse/FuseUtils';
 
 class jwtService extends FuseUtils.EventEmitter {
 
+    API_KEY = "http://localhost:4000/";
+
     init()
     {
+        axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+        axios.defaults.crossDomain = true;
         this.setInterceptors();
         this.handleAuthentication();
     }
@@ -15,10 +19,11 @@ class jwtService extends FuseUtils.EventEmitter {
             return response;
         }, err => {
             return new Promise((resolve, reject) => {
-                if ( err.response.status === 401 && err.config && !err.config.__isRetryRequest )
+                if ( err.status === 401 && err.config && !err.config.__isRetryRequest )
                 {
                     // if you ever get an unauthorized response, logout the user
                     this.emit('onAutoLogout', 'Invalid access_token');
+                    console.log("Error");
                     this.setSession(null);
                 }
                 throw err;
@@ -49,67 +54,22 @@ class jwtService extends FuseUtils.EventEmitter {
         }
     };
 
-    createUser = (data) => {
+    signInWithEmailAndPassword = (data) => {
         return new Promise((resolve, reject) => {
-            axios.post('/api/auth/register', data)
-                .then(response => {
-                    if ( response.data.user )
-                    {
-                        this.setSession(response.data.access_token);
-                        resolve(response.data.user);
-                    }
-                    else
-                    {
-                        reject(response.data.error);
-                    }
-                });
-        });
-    };
-
-    signInWithEmailAndPassword = (email, password) => {
-        return new Promise((resolve, reject) => {
-            axios.get('/api/auth', {
-                data: {
-                    email,
-                    password
-                }
-            }).then(response => {
-                if ( response.data.user )
+            console.log("here");
+            axios.post(this.API_KEY + 'customer/admin/auth', data).then(response => {
+                if ( response.token )
                 {
-                    this.setSession(response.data.access_token);
-                    resolve(response.data.user);
+                    this.setSession(response.token);
+                    console.log("Resolved");
+                    resolve(response);
                 }
                 else
                 {
-                    reject(response.data.error);
+                    console.log("Rejected");
+                    reject(response);
                 }
-            });
-        });
-    };
-
-    signInWithToken = () => {
-        return new Promise((resolve, reject) => {
-            axios.get('/api/auth/access-token', {
-                data: {
-                    access_token: this.getAccessToken()
-                }
-            })
-                .then(response => {
-                    if ( response.data.user )
-                    {
-                        this.setSession(response.data.access_token);
-                        resolve(response.data.user);
-                    }
-                    else
-                    {
-                        this.logout();
-                        reject('Failed to login with token.');
-                    }
-                })
-                .catch(error => {
-                    this.logout();
-                    reject('Failed to login with token.');
-                });
+            }).catch(err => console.log(err));
         });
     };
 

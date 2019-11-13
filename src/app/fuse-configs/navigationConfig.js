@@ -6,18 +6,18 @@ const navigationConfig = [
         'icon': 'apps',
         'children': [
             {
-                'id'   : 'dashboard-component',
+                'id'   : 'customer-dashboard-component',
                 'title': 'Dashboard',
                 'type' : 'item',
                 'icon' : 'dashboard',
-                'url'  : '/dashboard'
+                'url'  : '/customer/dashboard'
             },
             {
-                'id'   : 'attendance-component',
+                'id'   : 'customer-attendance-component',
                 'title': 'Attendance',
                 'type' : 'item',
                 'icon' : 'dashboard',
-                'url'  : '/attendance'
+                'url'  : '/customer/attendance'
             }
         ]
     },
@@ -28,18 +28,18 @@ const navigationConfig = [
         'icon'    : 'apps',
         'children': [
             {
-                'id'   : 'worker-component',
+                'id'   : 'customer-worker-component',
                 'title': 'Workers',
                 'type' : 'item',
                 'icon' : 'group',
-                'url'  : '/workers'
+                'url'  : '/customer/workers'
             },
             {
-                'id'   : 'supervisor-component',
+                'id'   : 'customer-supervisor-component',
                 'title': 'Supervisors',
                 'type' : 'item',
                 'icon' : 'person',
-                'url'  : '/supervisors'
+                'url'  : '/customer/supervisors'
             }
         ]
     }

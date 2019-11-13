@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import DashboardCard from './DashboardCard/DashboardCard';
 import Grid from '@material-ui/core/Grid/Grid';
 import MaterialTable from 'material-table';
+import Card from '@material-ui/core/Card/Card';
+import CardHeader from '@material-ui/core/CardHeader/CardHeader';
 
 const styles = makeStyles(theme => ({
     root: {
@@ -32,39 +34,57 @@ const dashboard = () => {
             </div>
             <Grid container className={classes.content} spacing={3}>
                 <Grid item md={6} sm={12} xs={12}>
-                    <MaterialTable
-                        title={"Present workers"}
-                        columns={[
-                            {title: "Name", field: "name"},
-                            {title: "Time", field: "time"}
-                        ]}
-                        data={[
-                            {
-                                name: "Dhiraj", time: "8.12 AM"
-                            },
-                            {
-                                name: "Piyush", time: "11.34 AM"
-                            }
-                        ]}
-                    />
+                    <div>
+                        <Card style={{background: "#2D323E"}}>
+                            <CardHeader style={{color: "#fff"}} title={"Present workers"} />
+                        </Card>
+                        <MaterialTable
+                            title={"Present workers"}
+                            columns={[
+                                {title: "Name", field: "name"},
+                                {title: "Time", field: "time"}
+                            ]}
+                            data={[
+                                {
+                                    name: "Dhiraj", time: "8.12 AM"
+                                },
+                                {
+                                    name: "Piyush", time: "11.34 AM"
+                                }
+                            ]}
+                            options={{
+                                toolbar: false,
+                                actionsColumnIndex: -1
+                            }}
+                        />
+                    </div>
                 </Grid>
                 <Grid item md={6} sm={12} xs={12}>
-                    <MaterialTable
-                        title={"Paid workers"}
-                        columns={[
-                            {title: "Name", field: "name"},
-                            {title: "Amount paid", field: "amount"},
-                            {title: "Date", field: "date"}
-                        ]}
-                        data={[
-                            {
-                                name: "Dhiraj", amount: "2653", date: "10/11/2019"
-                            },
-                            {
-                                name: "Piyush", amount: "2653", date: "10/11/2019"
-                            }
-                        ]}
-                    />
+                    <div>
+                        <Card style={{background: "#2D323E"}}>
+                            <CardHeader style={{color: "#fff"}} title={"Paid workers"} />
+                        </Card>
+                        <MaterialTable
+                            title={"Paid workers"}
+                            columns={[
+                                {title: "Name", field: "name"},
+                                {title: "Amount paid", field: "amount"},
+                                {title: "Date", field: "date"}
+                            ]}
+                            data={[
+                                {
+                                    name: "Dhiraj", amount: "2653", date: "10/11/2019"
+                                },
+                                {
+                                    name: "Piyush", amount: "2653", date: "10/11/2019"
+                                }
+                            ]}
+                            options={{
+                                toolbar: false,
+                                actionsColumnIndex: -1
+                            }}
+                        />
+                    </div>
                 </Grid>
             </Grid>
         </div>

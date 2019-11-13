@@ -7,9 +7,10 @@ export const DashboardConfig = {
             config: {}
         }
     },
+    auth: authRoles.customer,
     routes  : [
         {
-            path     : '/dashboard',
+            path     : '/customer/dashboard',
             component: Dashboard
         }
     ]

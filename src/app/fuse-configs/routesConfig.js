@@ -5,21 +5,27 @@ import LoginConfig from 'app/main/Login/LoginConfigs';
 import DashboardConfig from 'app/main/apps/Dashboard/DashboardConfigs';
 import AttendanceConfig from 'app/main/apps/Attendance/AttendanceConfigs';
 import UserConfig from 'app/main/apps/Users/UserConfigs';
-import HelpConfig from 'app/main/Help/HelpConfigs.js'
+import HelpConfig from 'app/main/Help/HelpConfigs';
+import Error404PageConfig from 'app/main/Errors/Error404PageConfig';
 
 const routeConfigs = [
     LoginConfig,
     DashboardConfig,
     AttendanceConfig,
     UserConfig,
-    HelpConfig
+    HelpConfig,
+    Error404PageConfig
 ];
 
 const routes = [
     ...FuseUtils.generateRoutesFromConfigs(routeConfigs),
     {
         path     : '/',
-        component: () => <Redirect to="/dashboard"/>
+        exact: true,
+        component: () => <Redirect to="/login"/>
+    },
+    {
+        component: () => <Redirect to="/404" />
     }
 ];
 

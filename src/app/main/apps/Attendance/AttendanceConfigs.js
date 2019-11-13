@@ -7,9 +7,10 @@ export const AttendanceConfig = {
             config: {}
         }
     },
+    auth: authRoles.customer,
     routes  : [
         {
-            path     : '/attendance',
+            path     : '/customer/attendance',
             component: Attendance
         }
     ]

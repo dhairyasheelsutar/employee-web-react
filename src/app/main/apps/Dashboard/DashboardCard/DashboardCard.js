@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon, Typography, Paper, IconButton, Grid} from '@material-ui/core';
+import {Typography, Paper, Grid} from '@material-ui/core';
 
 const dashboardCard = (props) => {
     return (

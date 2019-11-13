@@ -19,7 +19,9 @@ export function setUserData(user)
         /*
         Set User Settings
          */
-        dispatch(setDefaultSettings(user.data.settings));
+        dispatch(setDefaultSettings({
+            layout: {}
+        }));
 
         /*
         Set User Data

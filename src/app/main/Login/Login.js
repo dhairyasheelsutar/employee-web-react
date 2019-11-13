@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Card, CardContent, Typography} from '@material-ui/core';
 import {darken} from '@material-ui/core/styles/colorManipulator';
 import {FuseAnimate} from '@fuse';

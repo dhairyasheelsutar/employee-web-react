@@ -1,28 +1,8 @@
 import React, { useRef, useState } from 'react';
 import Formsy from 'formsy-react';
-import {TextFieldFormsy, FuseUtils} from '@fuse';
+import {TextFieldFormsy} from '@fuse';
 import Button from '@material-ui/core/Button/Button';
 import Typography from '@material-ui/core/Typography/Typography';
-import clsx from 'clsx';
-import {makeStyles} from '@material-ui/styles';
-import Icon from '@material-ui/core/Icon';
-
-const useStyles = makeStyles(theme => ({
-    productImageUpload      : {
-        transitionProperty      : 'box-shadow',
-        transitionDuration      : theme.transitions.duration.short,
-        transitionTimingFunction: theme.transitions.easing.easeInOut,
-    }
-}));
-
-function handleUploadChange(e)
-{
-    const file = e.target.files[0];
-    if ( !file )
-    {
-        return;
-    }
-}
 
 const onFormSubmit = () => {
     console.log("Form submitted");
@@ -30,9 +10,8 @@ const onFormSubmit = () => {
 
 function WorkerRegister(){
 
-    const classes = useStyles();
-
     const [isFormValid, setIsFormValid] = useState(false);
+    const [isFileValid, setIsFileValid] = useState(false);
     const formRef = useRef(null);
     return(
         <div className={"w-full"}>
@@ -112,24 +91,18 @@ function WorkerRegister(){
                 <div>
                     <input
                         accept="image/*"
-                        className="hidden"
-                        id="button-file"
+                        style={{ display: 'none' }}
+                        id="profile"
+                        name="profile"
                         type="file"
-                        name={"file"}
-                        onChange={handleUploadChange}
+                        onChange={() => setIsFileValid(true)}
+                        required
                     />
-                    <div className="flex justify-center sm:justify-start flex-wrap">
-                        <label
-                            htmlFor="button-file"
-                            className={
-                                clsx(
-                                    classes.productImageUpload,
-                                    "flex items-center justify-center relative w-128 h-128 rounded-4 mr-16 mb-16 overflow-hidden cursor-pointer shadow-1 hover:shadow-5"
-                                )}
-                        >
-                            <Icon fontSize="large" color="action">cloud_upload</Icon>
-                        </label>
-                    </div>
+                    <label htmlFor="profile">
+                        <Button type="button" variant="contained" component="p">
+                            Upload Photo
+                        </Button>
+                    </label>
                 </div>
 
                 <Button
@@ -138,7 +111,7 @@ function WorkerRegister(){
                     color="primary"
                     className="w-full mx-auto mt-16 normal-case"
                     aria-label="LOG IN"
-                    disabled={!isFormValid}
+                    disabled={!isFormValid || !isFileValid}
                     value="legacy"
                 >
                     Save
