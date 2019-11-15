@@ -5,6 +5,7 @@ import * as userActions from 'app/auth/store/actions';
 import {bindActionCreators} from 'redux';
 import * as Actions from 'app/store/actions';
 import jwtService from 'app/services/jwtService';
+import history from '@history';
 
 class Auth extends Component {
 
@@ -17,8 +18,8 @@ class Auth extends Component {
         return Promise.all([
             // Comment the lines which you do not use
                 this.jwtCheck()
-        ]).then(() => {
-            this.setState({waitAuthCheck: false})
+        ]).then((user) => {
+            this.setState({waitAuthCheck: false});
         })
     }
 
@@ -36,9 +37,9 @@ class Auth extends Component {
 
                     this.props.setUserData(user);
 
-                    resolve();
-
+                    resolve(user);
                     this.props.showMessage({message: 'Logged in with JWT'});
+
                 })
                 .catch(error => {
 

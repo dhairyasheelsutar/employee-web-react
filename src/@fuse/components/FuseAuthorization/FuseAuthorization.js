@@ -27,6 +27,7 @@ class FuseAuthorization extends Component {
 
     componentDidUpdate()
     {
+        console.log(this.state);
         if ( !this.state.accessGranted )
         {
             this.redirectRoute();
@@ -60,6 +61,7 @@ class FuseAuthorization extends Component {
         User is guest
         Redirect to Login Page
         */
+
         if ( !userRole || userRole.length === 0 )
         {
             history.push({
@@ -74,9 +76,17 @@ class FuseAuthorization extends Component {
         */
         else
         {
-            history.push({
-                pathname: redirectUrl
-            });
+
+            if(userRole[0] === 'admin'){
+                history.push({
+                    pathname: '/admin/dashboard'
+                });
+            }else{
+                history.push({
+                    pathname: '/customer/dashboard'
+                });
+            }
+
         }
     }
 

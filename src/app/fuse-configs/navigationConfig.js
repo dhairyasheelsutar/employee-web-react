@@ -1,3 +1,5 @@
+import {authRoles} from "../auth";
+
 const navigationConfig = [
     {
         'id': 'analytics',
@@ -10,6 +12,7 @@ const navigationConfig = [
                 'title': 'Dashboard',
                 'type' : 'item',
                 'icon' : 'dashboard',
+                'auth': authRoles.customer,
                 'url'  : '/customer/dashboard'
             },
             {
@@ -17,6 +20,7 @@ const navigationConfig = [
                 'title': 'Attendance',
                 'type' : 'item',
                 'icon' : 'dashboard',
+                'auth': authRoles.customer,
                 'url'  : '/customer/attendance'
             }
         ]
@@ -32,6 +36,7 @@ const navigationConfig = [
                 'title': 'Workers',
                 'type' : 'item',
                 'icon' : 'group',
+                'auth': authRoles.customer,
                 'url'  : '/customer/workers'
             },
             {
@@ -39,6 +44,7 @@ const navigationConfig = [
                 'title': 'Supervisors',
                 'type' : 'item',
                 'icon' : 'person',
+                'auth': authRoles.customer,
                 'url'  : '/customer/supervisors'
             }
         ]

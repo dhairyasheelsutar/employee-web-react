@@ -3,7 +3,7 @@ import * as Actions from '../actions';
 const initialState = {
     success: false,
     error  : {
-        username: null,
+        profileId: null,
         password: null
     }
 };

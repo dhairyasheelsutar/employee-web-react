@@ -4,17 +4,17 @@ import {TextFieldFormsy} from '@fuse';
 import Formsy from 'formsy-react';
 import * as authActions from 'app/auth/store/actions';
 import {useDispatch, useSelector} from 'react-redux';
+import {authRoles} from 'app/auth';
 
 function JWTLoginTab()
 {
     const dispatch = useDispatch();
     const login = useSelector(({auth}) => auth.login);
-
     const [isFormValid, setIsFormValid] = useState(false);
     const formRef = useRef(null);
 
     useEffect(() => {
-        if ( login.error && (login.error.email || login.error.password) )
+        if ( login.error && (login.error.profileId || login.error.password) )
         {
             formRef.current.updateInputsWithError({
                 ...login.error
@@ -35,7 +35,8 @@ function JWTLoginTab()
 
     function handleSubmit(model)
     {
-        dispatch(authActions.submitLogin(model));
+        model['profileId'] = parseInt(model.profileId);
+        dispatch(authActions.submitLogin(model, authRoles.customer));
     }
 
     return (

@@ -1,6 +1,7 @@
 const authRoles = {
     admin    : ['admin'],
-    customer: ['customer']
+    customer: ['customer'],
+    guest: []
 };
 
 export default authRoles;

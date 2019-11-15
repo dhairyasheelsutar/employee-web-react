@@ -20,9 +20,9 @@ const routeConfigs = [
 const routes = [
     ...FuseUtils.generateRoutesFromConfigs(routeConfigs),
     {
-        path     : '/',
+        path: '/',
         exact: true,
-        component: () => <Redirect to="/login"/>
+        component: () => <Redirect to={"/login"} />
     },
     {
         component: () => <Redirect to="/404" />

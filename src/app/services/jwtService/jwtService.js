@@ -1,14 +1,13 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import FuseUtils from '@fuse/FuseUtils';
+import * as constants from '../../Constants.js';
 
 class jwtService extends FuseUtils.EventEmitter {
 
-    API_KEY = "http://localhost:4000/";
-
     init()
     {
-        axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+        axios.defaults.headers.common['Content-Type'] = 'application/json';
         axios.defaults.crossDomain = true;
         this.setInterceptors();
         this.handleAuthentication();
@@ -54,15 +53,55 @@ class jwtService extends FuseUtils.EventEmitter {
         }
     };
 
-    signInWithEmailAndPassword = (data) => {
+    signInWithToken = () => {
         return new Promise((resolve, reject) => {
-            console.log("here");
-            axios.post(this.API_KEY + 'customer/admin/auth', data).then(response => {
-                if ( response.token )
+
+            const token = this.getAccessToken();
+            const userData = this.getData();
+
+            axios.post(constants.API_KEY + 'customer/admin/signInWithToken', {
+                token: token
+            })
+                .then(response => {
+
+                    console.log(response);
+
+                    if ( response.data.auth )
+                    {
+                        this.setSession(token);
+                        resolve(userData);
+                    }
+                    else
+                    {
+                        this.logout();
+                        reject('Failed to login with JWT');
+                    }
+                })
+                .catch(error => {
+                    this.logout();
+                    reject('Failed to login with token.');
+                });
+        });
+    };
+
+    signInWithEmailAndPassword = ({data, userRole}) => {
+        return new Promise((resolve, reject) => {
+            axios.post(constants.API_KEY + 'customer/admin/auth', data).then(response => {
+                if ( response.data.token )
                 {
-                    this.setSession(response.token);
+                    this.setSession(response.data.token);
+
+                    const userData = {
+                        role: userRole,
+                        data: {
+                            email: response.data.email,
+                            displayName: response.data.fullName
+                        }
+                    };
+
+                    this.setData(userData);
                     console.log("Resolved");
-                    resolve(response);
+                    resolve(userData);
                 }
                 else
                 {
@@ -77,6 +116,14 @@ class jwtService extends FuseUtils.EventEmitter {
         return axios.post('/api/auth/user/update', {
             user: user
         });
+    };
+
+    setData = data => {
+        if(data){
+            localStorage.setItem('user_data', JSON.stringify(data));
+        }else{
+            localStorage.removeItem('user_data');
+        }
     };
 
     setSession = access_token => {
@@ -94,6 +141,7 @@ class jwtService extends FuseUtils.EventEmitter {
 
     logout = () => {
         this.setSession(null);
+        this.setData(null);
     };
 
     isAuthTokenValid = access_token => {
@@ -116,6 +164,10 @@ class jwtService extends FuseUtils.EventEmitter {
 
     getAccessToken = () => {
         return window.localStorage.getItem('jwt_access_token');
+    };
+
+    getData = () => {
+        return JSON.parse(window.localStorage.getItem("user_data"));
     };
 }
 

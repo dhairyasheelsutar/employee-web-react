@@ -4,21 +4,25 @@ import {setUserData} from './user.actions';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
-export function submitLogin(data)
+export function submitLogin(data, userRole)
 {
     return (dispatch) =>
-        jwtService.signInWithEmailAndPassword(data)
+        jwtService.signInWithEmailAndPassword({data: data, userRole: userRole})
             .then((user) => {
-                    dispatch(setUserData({displayName: "Dhiraj sutar", email: "sutardhiraj98@gmail.com"}));
+                    dispatch(setUserData(user));
                     return dispatch({
                         type: LOGIN_SUCCESS
                     });
                 }
             )
             .catch(error => {
+
                 return dispatch({
                     type   : LOGIN_ERROR,
-                    payload: error
+                    payload: {
+                        profileId: "Check your profile ID",
+                        password: "Check your password"
+                    }
                 });
             });
 }
