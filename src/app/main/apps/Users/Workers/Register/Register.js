@@ -3,20 +3,27 @@ import Formsy from 'formsy-react';
 import {TextFieldFormsy} from '@fuse';
 import Button from '@material-ui/core/Button/Button';
 import Typography from '@material-ui/core/Typography/Typography';
-
-const onFormSubmit = () => {
-    console.log("Form submitted");
-};
+import * as Actions from '../../store/actions';
+import {useDispatch} from 'react-redux';
 
 function WorkerRegister(){
 
+    const dispatch = useDispatch();
     const [isFormValid, setIsFormValid] = useState(false);
-    const [isFileValid, setIsFileValid] = useState(false);
+    const [isFileValid, setIsFileValid] = useState(null);
     const formRef = useRef(null);
+
+    const onFormSubmit = (model) => {
+        dispatch(Actions.addWorker(model, isFileValid));
+        formRef.current.reset();
+        setIsFileValid(null);
+    };
+
     return(
         <div className={"w-full"}>
 
             <Formsy
+                encType={"multipart/form-data"}
                 onValidSubmit={onFormSubmit}
                 onValid={() => setIsFormValid(true)}
                 onInvalid={() => setIsFormValid(false)}
@@ -46,7 +53,7 @@ function WorkerRegister(){
                 <TextFieldFormsy
                     className="mb-16"
                     type="text"
-                    name="firstName"
+                    name="firstname"
                     label="First name"
                     validations={{
                         minLength: 4
@@ -61,7 +68,7 @@ function WorkerRegister(){
                 <TextFieldFormsy
                     className="mb-16"
                     type="text"
-                    name="lastName"
+                    name="lastname"
                     label="Last name"
                     validations={{
                         minLength: 4
@@ -76,7 +83,7 @@ function WorkerRegister(){
                 <TextFieldFormsy
                     className="mb-16"
                     type="text"
-                    name="mobile"
+                    name="mobileNo"
                     label="Mobile number"
                     validations={{
                         minLength: 10
@@ -95,13 +102,14 @@ function WorkerRegister(){
                         id="profile"
                         name="profile"
                         type="file"
-                        onChange={() => setIsFileValid(true)}
+                        onChange={(event) => setIsFileValid(event.target.files[0])}
                         required
                     />
                     <label htmlFor="profile">
                         <Button type="button" variant="contained" component="p">
                             Upload Photo
                         </Button>
+                        <span style={{marginLeft: "10px"}}>{isFileValid ? "Filename: " + isFileValid.name : null}</span>
                     </label>
                 </div>
 

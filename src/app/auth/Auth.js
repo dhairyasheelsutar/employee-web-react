@@ -5,7 +5,6 @@ import * as userActions from 'app/auth/store/actions';
 import {bindActionCreators} from 'redux';
 import * as Actions from 'app/store/actions';
 import jwtService from 'app/services/jwtService';
-import history from '@history';
 
 class Auth extends Component {
 

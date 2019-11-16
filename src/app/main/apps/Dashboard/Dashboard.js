@@ -32,6 +32,7 @@ function Dashboard() {
 
     useEffect(() => {
         dispatch(actionCreators.getData());
+        console.log(selector);
     }, [dispatch]);
 
     const classes = styles();

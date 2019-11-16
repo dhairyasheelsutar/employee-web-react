@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { FusePageSimple } from "../../../../../@fuse";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
+import withReducer from 'app/store/withReducer';
+import * as Actions from '../store/actions';
+import reducer from '../store/reducers';
 
-const supervisor = () => {
+function Supervisor(){
 
+    const dispatch = useDispatch();
+    const selector = useSelector(({userAppCustomer}) => userAppCustomer.SupervisorReducer);
+    useEffect(() => {
+        dispatch(Actions.getSupervisors());
+        console.log(selector);
+    }, []);
 
     return(
         <FusePageSimple
@@ -27,23 +37,16 @@ const supervisor = () => {
                     <MaterialTable
                         title={"All supervisors"}
                         columns={[
-                            {title: "Name", field: "name"},
+                            {title: "Name", field: "fullName"},
                             {title: "Email", field: "email"},
                             {title: "Mobile number", field: "mobileNo", type: "numeric"}
                         ]}
-                        data={[
-                            {
-                                name: "Dhiraj", email: "sutardhiraj98@gmail.com", mobileNo: 8788332232
-                            },
-                            {
-                                name: "Piyush", email: "thetechnolover7@gmail.com", mobileNo: 9158674554
-                            }
-                        ]}
+                        data={selector.supervisors}
                         actions={[
                             {
                                 icon: "delete_outline",
                                 tooltip: "Delete user",
-                                onClick: (e) => alert("Clicked")
+                                onClick: (event, row) => console.log(row)
                             }
                         ]}
 
@@ -58,4 +61,4 @@ const supervisor = () => {
     );
 };
 
-export default supervisor;
+export default withReducer('userAppCustomer', reducer)(Supervisor);

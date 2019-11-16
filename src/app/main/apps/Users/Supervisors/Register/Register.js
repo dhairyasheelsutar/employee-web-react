@@ -3,17 +3,20 @@ import Formsy from 'formsy-react';
 import {TextFieldFormsy} from '@fuse';
 import Button from '@material-ui/core/Button/Button';
 import Typography from '@material-ui/core/Typography/Typography';
+import * as Actions from '../../store/actions';
+import {useDispatch} from 'react-redux';
 
-const onFormSubmit = () => {
-    console.log("Form submitted");
-};
 
 function SupervisorRegister(){
 
+    const dispatch = useDispatch();
     const [isFormValid, setIsFormValid] = useState(false);
     const formRef = useRef(null);
 
-
+    const onFormSubmit = (model) => {
+        dispatch(Actions.addSupervisor(model));
+        formRef.current.reset();
+    };
 
     return(
         <div className={"w-full"}>
@@ -48,7 +51,7 @@ function SupervisorRegister(){
                 <TextFieldFormsy
                     className="mb-16"
                     type="text"
-                    name="firstName"
+                    name="firstname"
                     label="First name"
                     validations={{
                         minLength: 4
@@ -63,7 +66,7 @@ function SupervisorRegister(){
                 <TextFieldFormsy
                     className="mb-16"
                     type="text"
-                    name="lastName"
+                    name="lastname"
                     label="Last name"
                     validations={{
                         minLength: 4
@@ -78,7 +81,7 @@ function SupervisorRegister(){
                 <TextFieldFormsy
                     className="mb-16"
                     type="text"
-                    name="mobile"
+                    name="mobileNo"
                     label="Mobile number"
                     validations={{
                         minLength: 10

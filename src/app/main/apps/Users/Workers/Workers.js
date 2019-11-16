@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { FusePageSimple } from "../../../../../@fuse";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
+import withReducer from 'app/store/withReducer';
+import * as Actions from '../store/actions';
+import reducer from '../store/reducers';
 
-const worker = () => {
+function Worker(){
 
+    const dispatch = useDispatch();
+    const selector = useSelector(({userAppCustomer}) => userAppCustomer.WorkerReducer);
+    useEffect(() => {
+        dispatch(Actions.getWorkers());
+        console.log(selector);
+    }, []);
+
+    console.log(selector);
 
     return(
         <FusePageSimple
@@ -27,18 +39,11 @@ const worker = () => {
                     <MaterialTable
                         title={"All workers"}
                         columns={[
-                            {title: "Name", field: "name"},
+                            {title: "Name", field: "fullName"},
                             {title: "Email", field: "email"},
                             {title: "Mobile number", field: "mobileNo", type: "numeric"}
                         ]}
-                        data={[
-                            {
-                                name: "Dhiraj", email: "sutardhiraj98@gmail.com", mobileNo: 8788332232
-                            },
-                            {
-                                name: "Piyush", email: "thetechnolover7@gmail.com", mobileNo: 9158674554
-                            }
-                        ]}
+                        data={selector.workers}
                         actions={[
                             {
                                 icon: "delete_outline",
@@ -58,4 +63,4 @@ const worker = () => {
     );
 };
 
-export default worker;
+export default withReducer('userAppCustomer', reducer)(Worker);
