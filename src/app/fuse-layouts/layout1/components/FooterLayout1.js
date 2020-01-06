@@ -12,7 +12,7 @@ function FooterLayout1(props)
             <AppBar id="fuse-footer" className="relative z-10" color="default">
                 <Toolbar className="px-16 py-0 flex items-center">
                     <Typography>
-                        Footer
+                        <p style={{color: '#bbb'}}>Copyright <span>&copy;</span> Catalyst Brains</p>
                     </Typography>
                 </Toolbar>
             </AppBar>

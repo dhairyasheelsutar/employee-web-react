@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { FusePageSimple } from "../../../../@fuse";
+import {useSelector, useDispatch} from 'react-redux';
+import withReducer from 'app/store/withReducer';
+import * as Actions from './store/actions/attendance.actions';
+import reducer from './store/reducers';
 
+function Attendance() {
 
-const attendance = () => {
-
+    const dispatch = useDispatch();
+    const selector = useSelector(({attendanceWorkers}) => attendanceWorkers.AttendanceReducer);
+    useEffect(() => {
+        dispatch(Actions.get_workers_attendance());
+        console.log(selector);
+    }, []);
 
     return(
         <FusePageSimple
@@ -29,14 +38,7 @@ const attendance = () => {
                             {title: "Days attended", field: "dayAttended", type: "numeric"},
                             {title: "Calculated payment", field: "payment", type: "numeric"}
                         ]}
-                        data={[
-                            {
-                                name: "Dhiraj", dayAttended: 23, payment: 4500
-                            },
-                            {
-                                name: "Piyush", dayAttended: 25, payment: 7000
-                            }
-                        ]}
+                        data={selector.attendance}
                         actions={[
                             {
                                 icon: "payment",
@@ -56,4 +58,4 @@ const attendance = () => {
     );
 };
 
-export default attendance;
+export default withReducer('attendanceWorkers',  reducer)(Attendance);
